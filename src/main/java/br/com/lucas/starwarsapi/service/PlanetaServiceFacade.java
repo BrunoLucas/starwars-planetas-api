@@ -14,11 +14,11 @@ public interface PlanetaServiceFacade {
 	
 	public Planeta findById(UUID id);
 	
-	public void deleteById(UUID id);
+	public boolean deleteById(UUID id);
 	
 	public List<Planeta> findAll();
 
-	public void deleteByNome(String nome);
+	public boolean deleteByNome(String nome);
 
 	public Planeta save(Planeta planeta);
 }

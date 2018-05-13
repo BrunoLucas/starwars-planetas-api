@@ -35,8 +35,13 @@ public class PlanetaServiceFacadeImpl implements PlanetaServiceFacade{
 		return planeta;
 	}
 	
-	public void deleteById(UUID id){
-		planetaRepository.deleteById(id);
+	public boolean deleteById(UUID id){
+		try{
+			planetaRepository.deleteById(id);
+		}catch(Exception e){
+			return false;
+		}
+		return true;
 	}
 	
 	public List<Planeta> findAll() {
@@ -59,11 +64,17 @@ public class PlanetaServiceFacadeImpl implements PlanetaServiceFacade{
 		return quantidade;
 	}
 
-	public void deleteByNome(String nome) {
-		planetaRepository.deleteByNome(nome);
+	public boolean deleteByNome(String nome) {
+		try{
+			planetaRepository.deleteByNome(nome);
+		}catch(Exception e){
+			return false;
+		}
+		return true;
 	}
 
 	public Planeta save(Planeta planeta) {
+		planeta.setId(UUID.randomUUID());
 		planeta.setQuantidadeAparicoesEmFilme(quantidadeAparicoesEmFilmes(planeta.getNome()));
 		return planetaRepository.save(planeta);
 	}
