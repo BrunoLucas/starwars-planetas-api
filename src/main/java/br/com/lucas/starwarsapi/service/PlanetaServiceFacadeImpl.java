@@ -29,7 +29,7 @@ public class PlanetaServiceFacadeImpl implements PlanetaServiceFacade{
 
 	public Planeta findById(UUID id) {
 		Planeta planeta = planetaRepository.findById(id);
-		if(planeta.getQuantidadeAparicoesEmFilme() == null){
+		if(planeta != null && planeta.getQuantidadeAparicoesEmFilme() == null){
 			planeta.setQuantidadeAparicoesEmFilme(quantidadeAparicoesEmFilmes(planeta.getNome()));
 		}
 		return planeta;

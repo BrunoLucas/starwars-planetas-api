@@ -27,12 +27,22 @@ public class PlanetaControllerImpl implements PlanetaController{
 	
 	@RequestMapping("/findByNome")
 	public ResponseEntity<Planeta> findByNome(@RequestParam(value="nome") String nome) {
-		return ResponseEntity.ok(planetaServiceFacade.findByNome(nome));
+		Planeta planeta = planetaServiceFacade.findByNome(nome);
+		if(planeta != null){
+			return ResponseEntity.ok(planeta);
+		}else{
+			return ResponseEntity.badRequest().header("erro", "Planeta não encontrado!").build();
+		}
 	}
 
 	@RequestMapping("/findById")
 	public ResponseEntity<Planeta> findById(@RequestParam(value="id") UUID id) {
-		return ResponseEntity.ok(planetaServiceFacade.findById(id));
+		Planeta planeta =  planetaServiceFacade.findById(id);
+		if(planeta != null){
+			return ResponseEntity.ok(planeta);
+		}else{
+			return ResponseEntity.badRequest().header("erro", "Planeta não encontrado!").build();
+		}
 	}
 	@DeleteMapping("/deleteById")
 	public ResponseEntity<Boolean> deleteById(@RequestParam(value="id") UUID id) {
@@ -40,7 +50,7 @@ public class PlanetaControllerImpl implements PlanetaController{
 		 if(delete == true){
 			 return ResponseEntity.ok().build();
 		 }else{
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			 return ResponseEntity.badRequest().header("erro", "Não foi possível deletar!").build();
 		 }
 	}
 	@DeleteMapping("/deleteByNome/{nome}")
@@ -49,13 +59,19 @@ public class PlanetaControllerImpl implements PlanetaController{
 		 if(delete == true){
 			 return ResponseEntity.ok().build();
 		 }else{
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			 return ResponseEntity.badRequest().header("erro", "Não foi possível deletar!").build();
 		 }
 	}
 	
 	@PostMapping("/save")
 	public ResponseEntity<Planeta> save(@RequestBody Planeta planeta) {
-		return ResponseEntity.ok(planetaServiceFacade.save(planeta));
+		Planeta planetaSalvo = planetaServiceFacade.save(planeta);
+		if(planetaSalvo != null){
+			return ResponseEntity.ok(planetaSalvo);
+		}else{
+			 return ResponseEntity.status(500).header("erro", "Não foi possível deletar!").build();
+
+		}
 	}
 	@RequestMapping("/findAll")
 	public ResponseEntity<PlanetaLista> findAll() {
@@ -64,7 +80,11 @@ public class PlanetaControllerImpl implements PlanetaController{
 		for(Planeta planeta : planetas){
 			planetasLista.getPlanetas().add(planeta);
 		}
-		return ResponseEntity.ok(planetasLista);
+		if(!planetasLista.getPlanetas().isEmpty()){
+			return ResponseEntity.ok(planetasLista);
+		}else{
+			return ResponseEntity.status(500).header("erro", "Não foram encontrados planetas!").build();
+		}
 	}
 
 	

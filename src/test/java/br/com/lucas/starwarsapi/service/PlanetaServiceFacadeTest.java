@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +12,10 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -33,6 +38,12 @@ public class PlanetaServiceFacadeTest {
 	private PlanetaServiceFacade planetaService;
 	
 	@Autowired PlanetaRepository planetaRepository;
+	
+	@Mock 
+	PlanetaRepository planetaRepositoryMock;
+	@InjectMocks
+	@Autowired
+	private PlanetaServiceFacadeImpl planetaServiceImpl;
 	@Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
@@ -41,6 +52,7 @@ public class PlanetaServiceFacadeTest {
     public void setup() {
         DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
         this.mockMvc = builder.build();
+        MockitoAnnotations.initMocks(this);
     }
     
     @Test
@@ -81,5 +93,16 @@ public class PlanetaServiceFacadeTest {
     	for(Planeta planeta : planetas){
     		assertTrue(planeta.getQuantidadeAparicoesEmFilme() > 0);
     	}
+    }
+    
+    @Test
+    public void deveCriarPlanetaComIdEQuantidadeDeAparicoesEmFilmes(){
+    	Planeta yavin = new Planeta();
+    	yavin.setNome("Yavin2");
+    	yavin.setTerreno("Gas");
+    	
+    	Mockito.when(planetaRepositoryMock.save(yavin)).thenReturn(yavin);
+    	planetaServiceImpl.save(yavin);
+    	assertThat(yavin.getId(), is(notNullValue()));
     }
 }
