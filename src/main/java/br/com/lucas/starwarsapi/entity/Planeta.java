@@ -17,6 +17,8 @@ public class Planeta {
 	private String clima;
 	
 	private String terreno;
+	
+	private Integer quantidadeAparicoesEmFilme;
 
 
 	public UUID getId() {
@@ -51,10 +53,20 @@ public class Planeta {
 		this.terreno = terreno;
 	}
 
+	public Integer getQuantidadeAparicoesEmFilme() {
+		return quantidadeAparicoesEmFilme;
+	}
+
+	public void setQuantidadeAparicoesEmFilme(Integer quantidadeAparicoesEmFilme) {
+		this.quantidadeAparicoesEmFilme = quantidadeAparicoesEmFilme;
+	}
+
 	@Override
 	public String toString() {
-		return "Planeta [id=" + id + ", nome=" + nome + ", clima=" + clima + ", terreno=" + terreno + "]";
+		return "Planeta [id=" + id + ", nome=" + nome + ", clima=" + clima
+				+ ", terreno=" + terreno + ", quantidadeAparicoesEmFilme="
+				+ quantidadeAparicoesEmFilme + "]";
 	}
-	
+
 	
 }
