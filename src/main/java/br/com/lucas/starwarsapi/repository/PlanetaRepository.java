@@ -16,6 +16,8 @@ public interface PlanetaRepository extends MongoRepository<Planeta, String>{
 	Planeta findById(UUID id);
 	
 	void deleteById(UUID id);
+	void deleteByNome(String nome);
+	
 	
 	Planeta save(Planeta planeta);
 	
