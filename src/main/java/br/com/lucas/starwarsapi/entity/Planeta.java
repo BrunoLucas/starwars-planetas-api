@@ -20,6 +20,12 @@ public class Planeta {
 	
 	private Integer quantidadeAparicoesEmFilme;
 
+	public Planeta() {
+		super();
+	}
+	public Planeta(String nome) {
+		this.nome = nome;
+	}
 
 	public UUID getId() {
 		return id;
