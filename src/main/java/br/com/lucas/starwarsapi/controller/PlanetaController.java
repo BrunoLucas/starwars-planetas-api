@@ -1,21 +1,23 @@
 package br.com.lucas.starwarsapi.controller;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.ResponseEntity;
+
+import br.com.lucas.starwarsapi.dto.PlanetaLista;
 import br.com.lucas.starwarsapi.entity.Planeta;
 
 public interface PlanetaController {
 
-	public Planeta findByNome(String nome);
+	public ResponseEntity<Planeta> findByNome(String nome);
 
-	public Planeta findById(UUID id);
+	public ResponseEntity<Planeta> findById(UUID id);
 
-	public void deleteById(UUID id);
+	public ResponseEntity<Boolean> deleteById(UUID id);
 
-	public void deleteByNome(String nome);
+	public ResponseEntity<Boolean> deleteByNome(String nome);
 
-	public Planeta save(Planeta planeta);
+	public ResponseEntity<Planeta> save(Planeta planeta);
 
-	public List<Planeta> findAll();
+	public ResponseEntity<PlanetaLista> findAll();
 }
